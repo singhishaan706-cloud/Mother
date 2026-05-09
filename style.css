@@ -1,0 +1,66 @@
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:linear-gradient(160deg,#fff0f8,#fff8fb,#fff0f5);
+  min-height:100vh;
+  padding:1.2rem 1rem 2rem;
+}
+
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(50px) rotate(360deg);opacity:0}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.hidden{display:none!important}
+
+/* FORM */
+.form-hero{text-align:center;margin-bottom:1.5rem;padding-top:1rem}
+h2{font-size:20px;font-weight:600;color:#b5004a;margin-bottom:0.3rem;text-align:center}
+.sub{font-size:13px;color:#d472a0;text-align:center;margin-bottom:1.5rem}
+
+.field{margin-bottom:1rem}
+label{display:block;font-size:12px;font-weight:600;color:#b5004a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
+input,textarea{
+  width:100%;padding:11px 14px;
+  border:1.5px solid #ffc0d8;border-radius:14px;
+  font-size:14px;color:#7a2045;background:#fff5fa;
+  outline:none;font-family:inherit;
+}
+input:focus,textarea:focus{border-color:#e05088}
+textarea{resize:vertical;min-height:72px}
+
+.btn{
+  width:100%;padding:13px;background:#e05088;color:white;
+  border:none;border-radius:50px;font-size:16px;font-weight:600;
+  cursor:pointer;margin-top:0.5rem;transition:transform 0.15s;
+}
+.btn:active{transform:scale(0.97)}
+.error{color:#e05088;font-size:13px;margin-bottom:0.8rem;text-align:center}
+
+/* LOADING */
+.loading{text-align:center;padding:3rem 1rem}
+.loading p{color:#d472a0;margin-top:1rem;font-size:14px}
+.heart{font-size:48px;animation:heartbeat 1s ease-in-out infinite;display:inline-block}
+
+/* RESULT */
+.fh-row{position:relative;height:32px;overflow:hidden;margin-bottom:8px}
+.fh{position:absolute;font-size:14px;animation:confetti 3s ease-in infinite}
+
+.hero{text-align:center;padding:0.8rem 0 0.5rem;animation:fadeIn 0.8s ease}
+.big-heart{font-size:44px;animation:heartbeat 2s ease-in-out infinite;display:inline-block;margin-bottom:6px}
+.hero-name{font-size:24px;font-weight:600;color:#b5004a;margin-bottom:4px}
+.hero-tag{font-size:13px;color:#d472a0;font-style:italic}
+.sparkle{text-align:center;font-size:16px;margin:0.8rem 0 1rem;letter-spacing:6px}
+
+.card{background:white;border-radius:18px;padding:1.1rem 1rem;margin-bottom:1rem;border:1.5px solid #ffd6e8}
+.card-title{font-size:11px;font-weight:600;color:#e05088;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+
+.memory-item{display:flex;align-items:flex-start;gap:10px;background:#fff5fa;border-radius:12px;padding:0.7rem 0.8rem;border:1px solid #ffd6e8;margin-bottom:8px}
+.mdot{min-width:28px;height:28px;border-radius:50%;background:#f9a0c4;display:flex;align-items:center;justify-content:center;font-size:13px}
+.mtext{font-size:13px;color:#903058;line-height:1.5}
+
+.letter-box{background:#fff5fa;border-radius:14px;padding:1rem;border:1.5px dashed #f0a0c0;font-size:14px;color:#7a2045;line-height:1.9;font-style:italic}
+.letter-sig{margin-top:0.8rem;font-style:normal;font-weight:600;color:#b5004a;text-align:right}
+
+.footer{text-align:center;padding:0.5rem 0;font-size:12px;color:#d480a8}
+.restart-btn{width:100%;padding:11px;background:white;color:#e05088;border:1.5px solid #f0a0c0;border-radius:50px;font-size:14px;cursor:pointer;margin-top:8px}
