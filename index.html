@@ -1,80 +1,83 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mother's Day Special 💖</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Happy Mother's Day 💐</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- FORM PAGE -->
-  <div id="formPage">
-    <div class="form-hero">
-      <div style="font-size:40px">💐</div>
-      <h2>Mother's Day Page</h2>
-      <p class="sub">Kuch details bharo — ek special page ban jaayega!</p>
-    </div>
-
-    <div class="field">
-      <label>Aap unhe kya kehte ho?</label>
-      <input type="text" id="momName" placeholder="e.g. Mummy, Mumma, Maa, Amma..."/>
-    </div>
-    <div class="field">
-      <label>Aapka naam</label>
-      <input type="text" id="yourName" placeholder="Tumhara naam"/>
-    </div>
-    <div class="field">
-      <label>3 cheezein jo aapko unke baare mein pasand hain</label>
-      <textarea id="loves" placeholder="e.g. unka khana, unki smile, unka pyaar..."></textarea>
-    </div>
-    <div class="field">
-      <label>1-2 special memories unke saath</label>
-      <textarea id="memories" placeholder="e.g. jab unhone meri bimari mein raat bhar jaagi thi..."></textarea>
-    </div>
-
-    <p class="error hidden" id="errMsg"></p>
-    <button class="btn" onclick="generate()">Banao mera page 💖</button>
+  <div class="bg-petals" aria-hidden="true">
+    <span>🌸</span><span>🌺</span><span>🌷</span>
+    <span>🌸</span><span>💐</span><span>🌸</span>
+    <span>🌷</span><span>🌺</span><span>🌸</span>
   </div>
 
-  <!-- RESULT PAGE -->
-  <div class="hidden" id="resultPage">
-    <div class="fh-row">
-      <span class="fh" style="left:5%;animation-delay:0s">💕</span>
-      <span class="fh" style="left:20%;animation-delay:0.5s">🌸</span>
-      <span class="fh" style="left:40%;animation-delay:1s">💖</span>
-      <span class="fh" style="left:62%;animation-delay:0.3s">✨</span>
-      <span class="fh" style="left:80%;animation-delay:0.9s">🌷</span>
-      <span class="fh" style="left:93%;animation-delay:1.4s">💕</span>
+  <div class="container">
+    <div class="header">
+      <div class="crown">👑</div>
+      <h1>Mother's Day<br/><span>Message Generator</span></h1>
+      <p class="subtitle">Apni Maa ke liye ek special message banayein</p>
     </div>
 
-    <div class="hero">
-      <div class="big-heart">💖</div>
-      <div class="hero-name" id="rName"></div>
-      <div class="hero-tag" id="rTag"></div>
-    </div>
-    <div class="sparkle">✨ 🌸 ✨</div>
-
-    <div class="card">
-      <div class="card-title">💛 Jo cheezein mujhe aapke baare mein pasand hain</div>
-      <div id="lovesList"></div>
-    </div>
-
-    <div class="card" id="memCard">
-      <div class="card-title">📸 Hamare pyaare moments</div>
-      <div id="memsList"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">💌 Dil se ek baat</div>
-      <div class="letter-box">
-        <div id="letterText"></div>
-        <div class="letter-sig" id="letterSig"></div>
+    <div class="form-card">
+      <div class="form-group">
+        <label for="yourName">Aapka Naam</label>
+        <input type="text" id="yourName" placeholder="e.g. Priya" />
       </div>
+
+      <div class="form-group">
+        <label for="momName">Maa ka Naam</label>
+        <input type="text" id="momName" placeholder="e.g. Sunita" />
+      </div>
+
+      <div class="form-group">
+        <label for="memory">Ek Pyaara Memory / Moment unke saath</label>
+        <textarea id="memory" rows="3" placeholder="e.g. Jab woh raat ko chai banake mere paas baithti thi..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="quality">Unki Sabse Khaas Quality</label>
+        <input type="text" id="quality" placeholder="e.g. unka pyaar, unki strength, unki muskaan..." />
+      </div>
+
+      <div class="form-group">
+        <label for="wish">Aap unke liye kya chahte ho?</label>
+        <input type="text" id="wish" placeholder="e.g. hamesha khush rahein, healthy rahein..." />
+      </div>
+
+      <div class="form-group">
+        <label for="language">Message ki Bhasha</label>
+        <select id="language">
+          <option value="hindi">Hindi</option>
+          <option value="english">English</option>
+          <option value="hinglish">Hinglish (Mix)</option>
+        </select>
+      </div>
+
+      <button class="generate-btn" onclick="generateMessage()">
+        💌 Message Generate Karo
+      </button>
     </div>
 
-    <div class="footer" id="rFooter"></div>
-    <button class="restart-btn" onclick="restart()">Naya page banao 🔄</button>
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <span>🌹</span>
+        <h2>Aapka Special Message</h2>
+        <span>🌹</span>
+      </div>
+      <div class="message-box" id="messageBox"></div>
+      <div class="result-actions">
+        <button class="copy-btn" onclick="copyMessage()">📋 Copy Karo</button>
+        <button class="again-btn" onclick="generateAgain()">🔄 Naya Message</button>
+      </div>
+      <div id="copyAlert" class="copy-alert">✅ Message Copy Ho Gaya!</div>
+    </div>
+
+    <footer>
+      Made with ❤️ for all the amazing Moms 🌸
+    </footer>
   </div>
 
   <script src="script.js"></script>
