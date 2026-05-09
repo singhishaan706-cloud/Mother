@@ -1,0 +1,167 @@
+
+import { useState } from "react";
+
+const emojis = ["🌸","💐","🌷","🌺","🌼","🍀","🦋","⭐","🌟","✨"];
+const memEmojis = ["📸","🌟","🎂","💕","🥹"];
+
+export default function App() {
+  const [step, setStep] = useState("form");
+  const [momName, setMomName] = useState("");
+  const [yourName, setYourName] = useState("");
+  const [loves, setLoves] = useState("");
+  const [memories, setMemories] = useState("");
+  const [letter, setLetter] = useState("");
+  const [error, setError] = useState("");
+
+  async function generate() {
+    if (!momName.trim() || !yourName.trim() || !loves.trim()) {
+      setError("Pehle saari fields bharo! 😄");
+      return;
+    }
+    setError("");
+    setStep("loading");
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "anthropic-dangerous-direct-browser-calls": "true"
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: `Write a short heartfelt Mother's Day letter in Hinglish (Roman script Hindi mixed with English). 3-4 lines only. Start with "Maa," — warm, genuine, NOT dramatic. Only write the letter body, nothing else.
+
+Mom: ${momName}, Child: ${yourName}
+Loves about mom: ${loves}
+Memories: ${memories}`
+          }]
+        })
+      });
+
+      const data = await res.json();
+      const txt = data.content?.map(i => i.text || "").join("").trim();
+      if (!txt) throw new Error("empty");
+      setLetter(txt);
+      setStep("result");
+    } catch(e) {
+      setStep("form");
+      setError("Kuch gadbad ho gayi, dobara try karo! 😅");
+    }
+  }
+
+  function restart() {
+    setStep("form"); setMomName(""); setYourName("");
+    setLoves(""); setMemories(""); setLetter(""); setError("");
+  }
+
+  const loveItems = loves.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,4);
+  const memItems = memories.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,3);
+
+  const inp = {
+    width:"100%", padding:"11px 14px",
+    border:"1.5px solid #ffc0d8", borderRadius:14,
+    fontSize:14, color:"#7a2045", background:"#fff5fa",
+    outline:"none", fontFamily:"inherit", marginTop:2
+  };
+
+  if (step === "loading") return (
+    <div style={{textAlign:"center",padding:"3rem 1rem"}}>
+      <div style={{fontSize:48,animation:"heartbeat 1s ease-in-out infinite"}}>💖</div>
+      <p style={{color:"#d472a0",marginTop:"1rem",fontSize:14}}>Aapki Maa ke liye kuch special likh raha hoon...</p>
+      <style>{`@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}`}</style>
+    </div>
+  );
+
+  if (step === "result") return (
+    <div style={{padding:"1rem 1rem 2rem",fontFamily:"system-ui,sans-serif"}}>
+      <style>{`
+        @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+        @keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(50px) rotate(360deg);opacity:0}}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+      `}</style>
+      <div style={{position:"relative",height:32,overflow:"hidden",marginBottom:8}}>
+        {["💕","🌸","💖","✨","🌷","💕"].map((e,i)=>(
+          <span key={i} style={{position:"absolute",left:`${[5,20,40,62,80,93][i]}%`,fontSize:14,animation:`confetti 3s ease-in ${[0,0.5,1,0.3,0.9,1.4][i]}s infinite`}}>{e}</span>
+        ))}
+      </div>
+      <div style={{textAlign:"center",padding:"0.8rem 0 0.5rem",animation:"fadeIn 0.8s ease"}}>
+        <div style={{fontSize:44,animation:"heartbeat 2s ease-in-out infinite",display:"inline-block",marginBottom:6}}>💖</div>
+        <div style={{fontSize:24,fontWeight:600,color:"#b5004a",marginBottom:4}}>Hey, {momName}! 🌸</div>
+        <div style={{fontSize:13,color:"#d472a0",fontStyle:"italic"}}>{yourName} ne yeh sirf aapke liye banaya hai 💕</div>
+      </div>
+      <div style={{textAlign:"center",fontSize:16,margin:"0.8rem 0 1rem",letterSpacing:6}}>✨ 🌸 ✨</div>
+
+      <div style={{background:"white",borderRadius:18,padding:"1.1rem 1rem",marginBottom:"1rem",border:"1.5px solid #ffd6e8"}}>
+        <div style={{fontSize:11,fontWeight:600,color:"#e05088",textTransform:"uppercase",letterSpacing:1,marginBottom:10}}>💛 Jo cheezein mujhe aapke baare mein pasand hain</div>
+        {loveItems.map((l,i)=>(
+          <div key={i} style={{display:"flex",alignItems:"flex-start",gap:10,background:"#fff5fa",borderRadius:12,padding:"0.7rem 0.8rem",border:"1px solid #ffd6e8",marginBottom:8}}>
+            <div style={{minWidth:28,height:28,borderRadius:"50%",background:"#f9a0c4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13}}>{emojis[i]}</div>
+            <div style={{fontSize:13,color:"#903058",lineHeight:1.5}}>{l}</div>
+          </div>
+        ))}
+      </div>
+
+      {memItems.length > 0 && (
+        <div style={{background:"white",borderRadius:18,padding:"1.1rem 1rem",marginBottom:"1rem",border:"1.5px solid #ffd6e8"}}>
+          <div style={{fontSize:11,fontWeight:600,color:"#e05088",textTransform:"uppercase",letterSpacing:1,marginBottom:10}}>📸 Hamare pyaare moments</div>
+          {memItems.map((m,i)=>(
+            <div key={i} style={{display:"flex",alignItems:"flex-start",gap:10,background:"#fff5fa",borderRadius:12,padding:"0.7rem 0.8rem",border:"1px solid #ffd6e8",marginBottom:8}}>
+              <div style={{minWidth:28,height:28,borderRadius:"50%",background:"#f9a0c4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13}}>{memEmojis[i]}</div>
+              <div style={{fontSize:13,color:"#903058",lineHeight:1.5}}>{m}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div style={{background:"white",borderRadius:18,padding:"1.1rem 1rem",marginBottom:"1rem",border:"1.5px solid #ffd6e8"}}>
+        <div style={{fontSize:11,fontWeight:600,color:"#e05088",textTransform:"uppercase",letterSpacing:1,marginBottom:10}}>💌 Dil se ek baat</div>
+        <div style={{background:"#fff5fa",borderRadius:14,padding:"1rem",border:"1.5px dashed #f0a0c0",fontSize:14,color:"#7a2045",lineHeight:1.9,fontStyle:"italic"}}>
+          {letter.split("\n").map((l,i)=><span key={i}>{l}<br/></span>)}
+          <div style={{marginTop:"0.8rem",fontStyle:"normal",fontWeight:600,color:"#b5004a",textAlign:"right"}}>— {yourName} 💕</div>
+        </div>
+      </div>
+
+      <div style={{textAlign:"center",padding:"0.5rem 0",fontSize:12,color:"#d480a8"}}>Made with 💖 by {yourName}, sirf {momName} ke liye</div>
+      <button onClick={restart} style={{width:"100%",padding:11,background:"white",color:"#e05088",border:"1.5px solid #f0a0c0",borderRadius:50,fontSize:14,cursor:"pointer",marginTop:8}}>Naya page banao 🔄</button>
+    </div>
+  );
+
+  return (
+    <div style={{padding:"1.2rem 1rem 2rem",fontFamily:"system-ui,sans-serif"}}>
+      <div style={{textAlign:"center",marginBottom:"1.5rem"}}>
+        <div style={{fontSize:40}}>💐</div>
+        <h2 style={{fontSize:20,fontWeight:600,color:"#b5004a",margin:"0.4rem 0 0.2rem"}}>Mother's Day Page</h2>
+        <p style={{fontSize:13,color:"#d472a0"}}>Kuch details bharo — ek special page ban jaayega!</p>
+      </div>
+
+      {[
+        {label:"Aap unhe kya kehte ho?", val:momName, set:setMomName, ph:"e.g. Mummy, Mumma, Maa, Amma..."},
+        {label:"Aapka naam", val:yourName, set:setYourName, ph:"Tumhara naam"}
+      ].map(({label,val,set,ph})=>(
+        <div key={label} style={{marginBottom:"1rem"}}>
+          <label style={{display:"block",fontSize:12,fontWeight:600,color:"#b5004a",textTransform:"uppercase",letterSpacing:"0.8px",marginBottom:6}}>{label}</label>
+          <input style={inp} value={val} onChange={e=>set(e.target.value)} placeholder={ph} />
+        </div>
+      ))}
+
+      <div style={{marginBottom:"1rem"}}>
+        <label style={{display:"block",fontSize:12,fontWeight:600,color:"#b5004a",textTransform:"uppercase",letterSpacing:"0.8px",marginBottom:6}}>3 cheezein jo aapko unke baare mein pasand hain</label>
+        <textarea style={{...inp,minHeight:72,resize:"vertical"}} value={loves} onChange={e=>setLoves(e.target.value)} placeholder="e.g. unka khana, unki smile, unka pyaar..." />
+      </div>
+
+      <div style={{marginBottom:"1rem"}}>
+        <label style={{display:"block",fontSize:12,fontWeight:600,color:"#b5004a",textTransform:"uppercase",letterSpacing:"0.8px",marginBottom:6}}>1-2 special memories unke saath</label>
+        <textarea style={{...inp,minHeight:72,resize:"vertical"}} value={memories} onChange={e=>setMemories(e.target.value)} placeholder="e.g. jab unhone meri bimari mein raat bhar jaagi thi..." />
+      </div>
+
+      {error && <p style={{color:"#e05088",fontSize:13,marginBottom:"0.8rem",textAlign:"center"}}>{error}</p>}
+
+      <button onClick={generate} style={{width:"100%",padding:13,background:"#e05088",color:"white",border:"none",borderRadius:50,fontSize:16,fontWeight:600,cursor:"pointer"}}>
+        Banao mera page 💖
+      </button>
+    </div>
+  );
