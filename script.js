@@ -1,88 +1,94 @@
-const emojis = ["🌸","💐","🌷","🌺","🌼","🍀","🦋","⭐","🌟","✨"];
-const memEmojis = ["📸","🌟","🎂","💕","🥹"];
+const messages = {
+  hindi: [
+    (d) => `प्रिय ${d.momName} माँ,\n\nआज Mother's Day पर मैं, ${d.yourName}, आपको दिल से प्यार और ढेर सारी दुआएं देना चाहता/चाहती हूँ। 💐\n\n"${d.memory}" — यह पल मेरे दिल में हमेशा के लिए बसा हुआ है।\n\nआपकी ${d.quality} ने मुझे जीवन में आगे बढ़ने की ताकत दी है। आप सिर्फ माँ नहीं, मेरी सबसे बड़ी ताकत हैं।\n\nभगवान से दुआ है कि आप हमेशा ${d.wish}। आपका प्यार मेरी सबसे बड़ी दौलत है।\n\nआपका बच्चा,\n${d.yourName} ❤️`,
 
-function generateLetter(momName, yourName, loves, memories) {
-  const loveList = loves.split(/[,\n]/).map(s=>s.trim()).filter(Boolean);
-  const memList = memories.split(/[,\n]/).map(s=>s.trim()).filter(Boolean);
+    (d) => `माँ,\n\nशब्दों में आपका कर्ज़ चुकाना मुश्किल है, लेकिन आज Mother's Day पर मैं, ${d.yourName}, बस यही कहना चाहता/चाहती हूँ — आप मेरी दुनिया हैं। 🌸\n\n"${d.memory}" — इस याद को सोचकर आज भी आँखें नम हो जाती हैं।\n\nआपकी ${d.quality} ने मुझे सिखाया कि ज़िंदगी कैसे जीते हैं।\n\nदुआ है ${d.momName} माँ, कि भगवान आपको हमेशा ${d.wish}। आप हमेशा मुस्कुराती रहें।\n\nसदा आपका,\n${d.yourName} 💕`,
+  ],
 
-  const openers = [
-    `${momName}, kuch cheezein hoti hain jo words mein express nahi hoti — aur aapka pyaar unhi mein se ek hai.`,
-    `${momName}, aaj ka din sirf ek reminder hai, kyunki actually har din aapka din hai mere liye.`,
-    `${momName}, itne saare log hain is duniya mein — but aap jaisi koi nahi hai, seriously.`,
-    `${momName}, kabhi kabhi sochta hoon ki main itna lucky kyun hoon — aur answer hamesha aap hoti hain.`
-  ];
+  english: [
+    (d) => `Dear ${d.momName},\n\nOn this beautiful Mother's Day, I — ${d.yourName} — want you to know how deeply you are loved. 🌷\n\nI still cherish the memory of "${d.memory}". It's one of those moments that lives in my heart forever.\n\nYour ${d.quality} has shaped who I am today. You are not just my mother — you are my hero, my safe place, my everything.\n\nMy wish for you, today and always, is that you ${d.wish}. You deserve every happiness in the world.\n\nWith all my love,\n${d.yourName} 💐`,
 
-  const loveLines = loveList.length > 0
-    ? `Aapki ${loveList[0]}${loveList[1] ? `, aapki ${loveList[1]}` : ''} — yeh cheezein mujhe hamesha feel karaati hain ki sab theek hai.`
-    : `Aap jo karte ho mere liye, woh sab kuch mere dil mein hamesha rehta hai.`;
+    (d) => `To the most wonderful woman in my world — ${d.momName},\n\nHappy Mother's Day! I am ${d.yourName}, and I am so proud to call you my Mom. 🌸\n\n"${d.memory}" — this memory reminds me how lucky I am to have you.\n\nYour ${d.quality} is something I admire more every single day. You gave me roots and wings both.\n\nI pray that you always ${d.wish}. Thank you for being the light in my life, Mom.\n\nForever yours,\n${d.yourName} ❤️`,
+  ],
 
-  const memLine = memList.length > 0
-    ? `"${memList[0]}" — yeh moment kabhi nahi bhulunga.`
-    : `Hamare saath bitaaye har ek pal ko dil mein sambhal ke rakha hai maine.`;
+  hinglish: [
+    (d) => `Pyaari ${d.momName} Maa,\n\nAaj Mother's Day hai aur main — ${d.yourName} — bas itna kehna chahta/chahti hoon: Aap mere liye poori duniya ho! 💐\n\n"${d.memory}" — yeh moment yaad karke aaj bhi dil khush ho jaata hai.\n\nAapki ${d.quality} ne mujhe life mein kitna kuch sikhaaya hai. Maa, aap without you sab kuch adhoora lagta hai.\n\nMeri dua hai ki aap hamesha ${d.wish}. Bas aap khush raho, hamare liye yahi sabse bada tohfa hai.\n\nLove you to the moon and back,\n${d.yourName} 🌸❤️`,
 
-  const closers = [
-    `Thank you for being my safe place. Love you, ${momName}. Happy Mother's Day! 🌸`,
-    `Aap hain toh sab kuch hai. Happy Mother's Day, ${momName}! 💖`,
-    `Duniya ki sabse achi ${momName} ko — Happy Mother's Day! 🌷`,
-    `Bas yahi kehna tha — aap the best hain. Happy Mother's Day! ✨`
-  ];
+    (d) => `${d.momName} Maa, the best Maa in the entire universe! 🌺\n\nHappy Mother's Day! Yeh din sirf aapke liye hai. Main, ${d.yourName}, aaj sabke saamne bol raha/rahi hoon — Aap meri superhero ho!\n\n"${d.memory}" — yeh yaad zindagi bhar mere saath rahegi.\n\nAapki ${d.quality} ne mujhe strong banaya. Har mushkil mein aapka saath hi meri strength rahi hai.\n\nBas ek hi wish hai — aap hamesha ${d.wish}. You deserve all the love, chai, and rest in the world! ☕\n\nAapka baccha hamesha,\n${d.yourName} 💕`,
+  ],
+};
 
-  const opener = openers[Math.floor(Math.random() * openers.length)];
-  const closer = closers[Math.floor(Math.random() * closers.length)];
-
-  return `${opener}<br><br>${loveLines}<br><br>${memLine}<br><br>${closer}`;
-}
-
-function generate() {
-  const momName = document.getElementById('momName').value.trim();
+function generateMessage() {
   const yourName = document.getElementById('yourName').value.trim();
-  const loves = document.getElementById('loves').value.trim();
-  const memories = document.getElementById('memories').value.trim();
-  const err = document.getElementById('errMsg');
+  const momName  = document.getElementById('momName').value.trim();
+  const memory   = document.getElementById('memory').value.trim();
+  const quality  = document.getElementById('quality').value.trim();
+  const wish     = document.getElementById('wish').value.trim();
+  const language = document.getElementById('language').value;
 
-  if (!momName || !yourName || !loves) {
-    err.textContent = 'Pehle saari fields bharo! 😄';
-    err.classList.remove('hidden');
+  if (!yourName || !momName || !memory || !quality || !wish) {
+    alert('Kripya sabhi fields fill karein! 🌸');
     return;
   }
-  err.classList.add('hidden');
 
-  const loveItems = loves.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,4);
-  const memItems = memories.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,3);
-  const letter = generateLetter(momName, yourName, loves, memories);
+  const data = { yourName, momName, memory, quality, wish };
+  const pool = messages[language];
+  const template = pool[Math.floor(Math.random() * pool.length)];
+  const msg = template(data);
 
-  document.getElementById('rName').textContent = `Hey, ${momName}! 🌸`;
-  document.getElementById('rTag').textContent = `${yourName} ne yeh sirf aapke liye banaya hai 💕`;
+  document.getElementById('messageBox').textContent = msg;
+  document.getElementById('copyAlert').style.display = 'none';
 
-  document.getElementById('lovesList').innerHTML = loveItems.map((l,i) => `
-    <div class="memory-item">
-      <div class="mdot">${emojis[i % emojis.length]}</div>
-      <div class="mtext">${l}</div>
-    </div>`).join('');
-
-  if (memItems.length) {
-    document.getElementById('memsList').innerHTML = memItems.map((m,i) => `
-      <div class="memory-item">
-        <div class="mdot">${memEmojis[i] || '💕'}</div>
-        <div class="mtext">${m}</div>
-      </div>`).join('');
-  } else {
-    document.getElementById('memCard').classList.add('hidden');
-  }
-
-  document.getElementById('letterText').innerHTML = letter;
-  document.getElementById('letterSig').textContent = `— ${yourName} 💕`;
-  document.getElementById('rFooter').textContent = `Made with 💖 by ${yourName}, sirf ${momName} ke liye`;
-
-  document.getElementById('formPage').classList.add('hidden');
-  document.getElementById('resultPage').classList.remove('hidden');
+  const card = document.getElementById('resultCard');
+  card.classList.add('visible');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function restart() {
-  document.getElementById('resultPage').classList.add('hidden');
-  document.getElementById('memCard').classList.remove('hidden');
-  document.getElementById('formPage').classList.remove('hidden');
-  ['momName','yourName','loves','memories'].forEach(id => {
-    document.getElementById(id).value = '';
+function generateAgain() {
+  const yourName = document.getElementById('yourName').value.trim();
+  const momName  = document.getElementById('momName').value.trim();
+  const memory   = document.getElementById('memory').value.trim();
+  const quality  = document.getElementById('quality').value.trim();
+  const wish     = document.getElementById('wish').value.trim();
+  const language = document.getElementById('language').value;
+
+  if (!yourName || !momName || !memory || !quality || !wish) {
+    alert('Pehle sabhi fields fill karein! 🌸');
+    return;
+  }
+
+  const data = { yourName, momName, memory, quality, wish };
+  const pool = messages[language];
+  const current = document.getElementById('messageBox').textContent;
+  let template, newMsg, attempts = 0;
+
+  do {
+    template = pool[Math.floor(Math.random() * pool.length)];
+    newMsg = template(data);
+    attempts++;
+  } while (newMsg === current && attempts < 5);
+
+  document.getElementById('messageBox').textContent = newMsg;
+  document.getElementById('copyAlert').style.display = 'none';
+}
+
+function copyMessage() {
+  const text = document.getElementById('messageBox').textContent;
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const alert = document.getElementById('copyAlert');
+    alert.style.display = 'block';
+    setTimeout(() => { alert.style.display = 'none'; }, 2500);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const alert = document.getElementById('copyAlert');
+    alert.style.display = 'block';
+    setTimeout(() => { alert.style.display = 'none'; }, 2500);
   });
 }
