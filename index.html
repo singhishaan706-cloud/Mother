@@ -1,212 +1,90 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mother's Day Special 💖</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(160deg,#fff0f8,#fff8fb,#fff0f5);min-height:100vh;padding:1.2rem 1rem 2rem}
-  @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-  @keyframes confetti{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(50px) rotate(360deg);opacity:0}}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
-  .hidden{display:none!important}
-  h2{font-size:20px;font-weight:600;color:#b5004a;margin-bottom:0.3rem;text-align:center}
-  .sub{font-size:13px;color:#d472a0;text-align:center;margin-bottom:1.5rem}
-  .field{margin-bottom:1rem}
-  label{display:block;font-size:12px;font-weight:600;color:#b5004a;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
-  input,textarea{width:100%;padding:11px 14px;border:1.5px solid #ffc0d8;border-radius:14px;font-size:14px;color:#7a2045;background:#fff5fa;outline:none;font-family:inherit}
-  input:focus,textarea:focus{border-color:#e05088}
-  textarea{resize:vertical;min-height:72px}
-  .btn{width:100%;padding:13px;background:#e05088;color:white;border:none;border-radius:50px;font-size:16px;font-weight:600;cursor:pointer;margin-top:0.5rem}
-  .btn:active{transform:scale(0.97)}
-  .error{color:#e05088;font-size:13px;margin-bottom:0.8rem;text-align:center}
-
-  .loading{text-align:center;padding:3rem 1rem}
-  .loading .heart{font-size:48px;animation:heartbeat 1s ease-in-out infinite;display:inline-block}
-
-  .fh-row{position:relative;height:32px;overflow:hidden;margin-bottom:8px}
-  .fh{position:absolute;font-size:14px;animation:confetti 3s ease-in infinite}
-  .hero{text-align:center;padding:0.8rem 0 0.5rem;animation:fadeIn 0.8s ease}
-  .big-heart{font-size:44px;animation:heartbeat 2s ease-in-out infinite;display:inline-block;margin-bottom:6px}
-  .hero-name{font-size:24px;font-weight:600;color:#b5004a;margin-bottom:4px}
-  .hero-tag{font-size:13px;color:#d472a0;font-style:italic}
-  .sparkle{text-align:center;font-size:16px;margin:0.8rem 0 1rem;letter-spacing:6px}
-
-  .card{background:white;border-radius:18px;padding:1.1rem 1rem;margin-bottom:1rem;border:1.5px solid #ffd6e8}
-  .card-title{font-size:11px;font-weight:600;color:#e05088;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-  .memory-item{display:flex;align-items:flex-start;gap:10px;background:#fff5fa;border-radius:12px;padding:0.7rem 0.8rem;border:1px solid #ffd6e8;margin-bottom:8px}
-  .mdot{min-width:28px;height:28px;border-radius:50%;background:#f9a0c4;display:flex;align-items:center;justify-content:center;font-size:13px}
-  .mtext{font-size:13px;color:#903058;line-height:1.5}
-
-  .letter-box{background:#fff5fa;border-radius:14px;padding:1rem;border:1.5px dashed #f0a0c0;font-size:14px;color:#7a2045;line-height:1.9;font-style:italic}
-  .letter-sig{margin-top:0.8rem;font-style:normal;font-weight:600;color:#b5004a;text-align:right}
-  .footer{text-align:center;padding:0.5rem 0;font-size:12px;color:#d480a8}
-  .restart-btn{width:100%;padding:11px;background:white;color:#e05088;border:1.5px solid #f0a0c0;border-radius:50px;font-size:14px;cursor:pointer;margin-top:8px}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mother's Day Special 💖</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- FORM -->
-<div id="formPage">
-  <div style="text-align:center;margin-bottom:1.5rem;padding-top:1rem">
-    <div style="font-size:40px">💐</div>
-    <h2>Mother's Day Page</h2>
-    <p class="sub">Kuch details bharo — ek special page ban jaayega!</p>
+  <!-- FORM PAGE -->
+  <div id="formPage">
+    <div class="form-hero">
+      <div style="font-size:40px">💐</div>
+      <h2>Mother's Day Page</h2>
+      <p class="sub">Kuch details bharo — ek special page ban jaayega!</p>
+    </div>
+
+    <div class="field">
+      <label>Aap unhe kya kehte ho?</label>
+      <input type="text" id="momName" placeholder="e.g. Mummy, Mumma, Maa, Amma..."/>
+    </div>
+    <div class="field">
+      <label>Aapka naam</label>
+      <input type="text" id="yourName" placeholder="Tumhara naam"/>
+    </div>
+    <div class="field">
+      <label>3 cheezein jo aapko unke baare mein pasand hain</label>
+      <textarea id="loves" placeholder="e.g. unka khana, unki smile, unka pyaar..."></textarea>
+    </div>
+    <div class="field">
+      <label>1-2 special memories unke saath</label>
+      <textarea id="memories" placeholder="e.g. jab unhone meri bimari mein raat bhar jaagi thi..."></textarea>
+    </div>
+
+    <p class="error hidden" id="errMsg"></p>
+    <button class="btn" onclick="generate()">Banao mera page 💖</button>
   </div>
 
-  <div class="field">
-    <label>Aap unhe kya kehte ho?</label>
-    <input type="text" id="momName" placeholder="e.g. Mummy, Mumma, Maa, Amma..."/>
-  </div>
-  <div class="field">
-    <label>Aapka naam</label>
-    <input type="text" id="yourName" placeholder="Tumhara naam"/>
-  </div>
-  <div class="field">
-    <label>3 cheezein jo aapko unke baare mein pasand hain</label>
-    <textarea id="loves" placeholder="e.g. unka khana, unki smile, unka pyaar..."></textarea>
-  </div>
-  <div class="field">
-    <label>1-2 special memories unke saath</label>
-    <textarea id="memories" placeholder="e.g. jab unhone meri bimari mein raat bhar jaagi thi..."></textarea>
-  </div>
-
-  <p class="error hidden" id="errMsg"></p>
-  <button class="btn" onclick="generate()">Banao mera page 💖</button>
-</div>
-
-<!-- LOADING -->
-<div class="hidden" id="loadingPage">
-  <div class="loading">
-    <span class="heart">💖</span>
-    <p style="color:#d472a0;margin-top:1rem;font-size:14px">Aapki Maa ke liye kuch special likh raha hoon...</p>
-  </div>
-</div>
-
-<!-- RESULT -->
-<div class="hidden" id="resultPage">
-  <div class="fh-row">
-    <span class="fh" style="left:5%;animation-delay:0s">💕</span>
-    <span class="fh" style="left:20%;animation-delay:0.5s">🌸</span>
-    <span class="fh" style="left:40%;animation-delay:1s">💖</span>
-    <span class="fh" style="left:62%;animation-delay:0.3s">✨</span>
-    <span class="fh" style="left:80%;animation-delay:0.9s">🌷</span>
-    <span class="fh" style="left:93%;animation-delay:1.4s">💕</span>
-  </div>
-  <div class="hero">
-    <div class="big-heart">💖</div>
-    <div class="hero-name" id="rName"></div>
-    <div class="hero-tag" id="rTag"></div>
-  </div>
-  <div class="sparkle">✨ 🌸 ✨</div>
-
-  <div class="card">
-    <div class="card-title">💛 Jo cheezein mujhe aapke baare mein pasand hain</div>
-    <div id="lovesList"></div>
-  </div>
-  <div class="card" id="memCard">
-    <div class="card-title">📸 Hamare pyaare moments</div>
-    <div id="memsList"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">💌 Dil se ek baat</div>
-    <div class="letter-box">
-      <div id="letterText"></div>
-      <div class="letter-sig" id="letterSig"></div>
+  <!-- LOADING PAGE -->
+  <div class="hidden" id="loadingPage">
+    <div class="loading">
+      <span class="heart">💖</span>
+      <p>Aapki Maa ke liye kuch special likh raha hoon...</p>
     </div>
   </div>
 
-  <div class="footer" id="rFooter"></div>
-  <button class="restart-btn" onclick="restart()">Naya page banao 🔄</button>
-</div>
+  <!-- RESULT PAGE -->
+  <div class="hidden" id="resultPage">
+    <div class="fh-row">
+      <span class="fh" style="left:5%;animation-delay:0s">💕</span>
+      <span class="fh" style="left:20%;animation-delay:0.5s">🌸</span>
+      <span class="fh" style="left:40%;animation-delay:1s">💖</span>
+      <span class="fh" style="left:62%;animation-delay:0.3s">✨</span>
+      <span class="fh" style="left:80%;animation-delay:0.9s">🌷</span>
+      <span class="fh" style="left:93%;animation-delay:1.4s">💕</span>
+    </div>
 
-<script>
-const emojis = ["🌸","💐","🌷","🌺","🌼","🍀","🦋","⭐","🌟","✨"];
-const memEmojis = ["📸","🌟","🎂","💕","🥹"];
+    <div class="hero">
+      <div class="big-heart">💖</div>
+      <div class="hero-name" id="rName"></div>
+      <div class="hero-tag" id="rTag"></div>
+    </div>
+    <div class="sparkle">✨ 🌸 ✨</div>
 
-async function generate() {
-  const momName = document.getElementById('momName').value.trim();
-  const yourName = document.getElementById('yourName').value.trim();
-  const loves = document.getElementById('loves').value.trim();
-  const memories = document.getElementById('memories').value.trim();
-  const err = document.getElementById('errMsg');
+    <div class="card">
+      <div class="card-title">💛 Jo cheezein mujhe aapke baare mein pasand hain</div>
+      <div id="lovesList"></div>
+    </div>
 
-  if (!momName || !yourName || !loves) {
-    err.textContent = 'Pehle saari fields bharo! 😄';
-    err.classList.remove('hidden');
-    return;
-  }
-  err.classList.add('hidden');
+    <div class="card" id="memCard">
+      <div class="card-title">📸 Hamare pyaare moments</div>
+      <div id="memsList"></div>
+    </div>
 
-  document.getElementById('formPage').classList.add('hidden');
-  document.getElementById('loadingPage').classList.remove('hidden');
+    <div class="card">
+      <div class="card-title">💌 Dil se ek baat</div>
+      <div class="letter-box">
+        <div id="letterText"></div>
+        <div class="letter-sig" id="letterSig"></div>
+      </div>
+    </div>
 
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "anthropic-dangerous-direct-browser-calls": "true"
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        messages: [{
-          role: "user",
-          content: `Write a short heartfelt Mother's Day letter in Hinglish (Roman script Hindi mixed with English). 3-4 lines only. Start with "${momName}," — warm, genuine, NOT dramatic. Only write the letter body, nothing else.\n\nChild's name: ${yourName}\nLoves about mom: ${loves}\nMemories: ${memories}`
-        }]
-      })
-    });
+    <div class="footer" id="rFooter"></div>
+    <button class="restart-btn" onclick="restart()">Naya page banao 🔄</button>
+  </div>
 
-    const data = await res.json();
-    const letter = data.content?.map(i => i.text || "").join("").trim();
-    if (!letter) throw new Error("empty");
-
-    const loveItems = loves.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,4);
-    const memItems = memories.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,3);
-
-    document.getElementById('rName').textContent = `Hey, ${momName}! 🌸`;
-    document.getElementById('rTag').textContent = `${yourName} ne yeh sirf aapke liye banaya hai 💕`;
-
-    document.getElementById('lovesList').innerHTML = loveItems.map((l,i)=>`
-      <div class="memory-item">
-        <div class="mdot">${emojis[i%emojis.length]}</div>
-        <div class="mtext">${l}</div>
-      </div>`).join('');
-
-    if (memItems.length) {
-      document.getElementById('memsList').innerHTML = memItems.map((m,i)=>`
-        <div class="memory-item">
-          <div class="mdot">${memEmojis[i]||'💕'}</div>
-          <div class="mtext">${m}</div>
-        </div>`).join('');
-    } else {
-      document.getElementById('memCard').classList.add('hidden');
-    }
-
-    document.getElementById('letterText').innerHTML = letter.replace(/\n/g,'<br>');
-    document.getElementById('letterSig').textContent = `— ${yourName} 💕`;
-    document.getElementById('rFooter').textContent = `Made with 💖 by ${yourName}, sirf ${momName} ke liye`;
-
-    document.getElementById('loadingPage').classList.add('hidden');
-    document.getElementById('resultPage').classList.remove('hidden');
-  } catch(e) {
-    document.getElementById('loadingPage').classList.add('hidden');
-    document.getElementById('formPage').classList.remove('hidden');
-    const err = document.getElementById('errMsg');
-    err.textContent = 'Kuch gadbad ho gayi, dobara try karo! 😅';
-    err.classList.remove('hidden');
-  }
-}
-
-function restart() {
-  document.getElementById('resultPage').classList.add('hidden');
-  document.getElementById('formPage').classList.remove('hidden');
-  document.getElementById('memCard').classList.remove('hidden');
-  ['momName','yourName','loves','memories'].forEach(id => document.getElementById(id).value='');
-}
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
